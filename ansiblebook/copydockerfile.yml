@@ -21,3 +21,26 @@
         group: foo
         mode: '0644'
 
+    - name: Copy file
+      ansible.builtin.copy:
+        src: /root/SRC_Projects/web1
+        dest: /root/web1
+        owner: foo
+        group: foo
+        mode: '0644'
+
+    - name: Copy file
+      ansible.builtin.copy:
+        src: /root/SRC_Projects/web1
+        dest: /root/web2
+        owner: foo
+        group: foo
+        mode: '0644'
+
+    - name: Copy file
+      ansible.builtin.copy:
+        src: /root/SRC_Projects/web3
+        dest: /root/web3
+        owner: foo
+        group: foo
+        mode: '0644'
