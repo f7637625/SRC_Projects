@@ -1,0 +1,35 @@
+---
+- name: Pull Apache
+  hosts: testmachine
+  become: true
+
+  tasks:
+    - name: httpd on docker
+      docker_image:
+        name: httpd
+        source: pull
+        state: present
+
+    - name: Creation of a dictory
+      file:
+        path: "/var/www/html"
+        state: directory
+
+    - name: firewall for port
+      firewalld:
+        permanent: yes
+        immediate: yes
+        service: "{{item}}"
+        state: enabled
+      with_items:
+        - http
+        - https
+
+    - name: docker container
+      community.docker.docker_container:
+        name: mu-webserver-container
+        image: httpd
+        state: started
+        ports: "80:80"
+
+

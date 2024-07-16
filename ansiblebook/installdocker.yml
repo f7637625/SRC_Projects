@@ -1,0 +1,65 @@
+---
+- name: Install Docker
+  gather_facts: false
+  hosts: testmachine
+  become: true
+
+  tasks:
+    - name: Install yum utils
+      yum:
+        name: "{{item}}"
+        state: latest
+      with_items:
+            - yum-utils
+            - device-mapper-persistent-data
+            - lvm2
+
+    - name: Add Docker repo
+      command: >
+        dnf config-manager --add-repo  https://download.docker.com/linux/centos/docker-ce.repo
+      ignore_errors: yes
+
+    - name: Install Docker
+      yum:
+        name: "{{item}}"
+        state: latest
+      with_items:
+            - docker-ce
+            - docker-ce-cli
+            - containerd.io
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add user jameslee to docker group
+      user:
+        name: jameslee
+        groups: docker
+        append: yes
+
+    - name: pull docker image ubuntu
+      docker_image:
+        name: ubuntu
+        source: pull
+
+    - name: Create folder at root
+      ansible.builtin.file:
+        path: web1
+        state: directory
+        mode: '0755'
+
+    - name: Create folder at root
+      ansible.builtin.file:
+        path: web2
+        state: directory
+        mode: '0755'
+
+    - name: Create folder at root
+      ansible.builtin.file:
+        path: web3
+        state: directory
+        mode: '0755'
+
