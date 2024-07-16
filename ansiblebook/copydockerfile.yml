@@ -1,0 +1,23 @@
+---
+- name: Copy docker file and compose
+  gather_facts: false
+  hosts: docker
+  become: true
+
+  tasks:
+    - name: Copy file
+      ansible.builtin.copy:
+        src: /root/SRC_Projects/docker-compose.yml
+        dest: /root/docker-compose.yml
+        owner: foo
+        group: foo
+        mode: '0644'
+
+    - name: Copy file
+      ansible.builtin.copy:
+        src: /root/SRC_Projects/dockerfile
+        dest: /root/dockerfile
+        owner: foo
+        group: foo
+        mode: '0644'
+
