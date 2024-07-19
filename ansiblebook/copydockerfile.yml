@@ -8,39 +8,31 @@
     - name: Copy file
       ansible.builtin.copy:
         src: /root/SRC_Projects/docker-compose.yml
-        dest: /root/docker-compose.yml
-        owner: foo
-        group: foo
-        mode: '0644'
+        dest: /root
 
     - name: Copy file
       ansible.builtin.copy:
         src: /root/SRC_Projects/dockerfile
-        dest: /root/dockerfile
-        owner: foo
-        group: foo
-        mode: '0644'
+        dest: /root
 
     - name: Copy file
       ansible.builtin.copy:
         src: /root/SRC_Projects/web1
-        dest: /root/web1
-        owner: foo
-        group: foo
-        mode: '0644'
+        dest: /root
 
     - name: Copy file
       ansible.builtin.copy:
-        src: /root/SRC_Projects/web1
-        dest: /root/web2
-        owner: foo
-        group: foo
-        mode: '0644'
+        src: /root/SRC_Projects/web2
+        dest: /root
 
     - name: Copy file
       ansible.builtin.copy:
         src: /root/SRC_Projects/web3
-        dest: /root/web3
-        owner: foo
-        group: foo
-        mode: '0644'
+        dest: /root
+
+    - name: Run `docker-compose up` again
+      command: docker-compose -f /root/docker-compose.yml up -d
+      args:
+        chdir: /root
+
+
