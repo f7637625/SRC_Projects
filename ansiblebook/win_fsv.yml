@@ -16,8 +16,8 @@
    - name: install source
      win_feature:
       name:
-       -FS-FileServer
-       -FS-Resource-Manager
+       - FS-FileServer
+       - FS-Resource-Manager
       state: present
 
    - name: allow guest
