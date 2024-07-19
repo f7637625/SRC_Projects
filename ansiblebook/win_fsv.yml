@@ -1,0 +1,48 @@
+---
+- name: create fs server
+  hosts: windows
+
+  tasks:
+   - name: add admin account
+     win_user:
+      name: admin
+      password: Root1234
+      groups: Administrators
+      update_password: on_create
+      password_never_expires: yes
+      user_cannot_change_password: no
+      state: present
+
+   - name: install source
+     win_feature:
+      name:
+       -FS-FileServer
+       -FS-Resource-Manager
+      state: present
+
+   - name: allow guest
+     win_user:
+      name: Guest
+      state: present
+      account_disabled: no
+
+   - name: create directory
+     win_file:
+      path: "C:/share"
+      state: directory
+
+   - name: create share folder
+     win_share:
+      name: "share"
+      description: Windows share
+      path: "C:/share"
+      list: yes
+      full: Administrators
+      read: Everyone
+      state: present
+
+   - name: copy directory file
+     win_copy:
+      src: /root/share
+      dest: C:\
+ 
