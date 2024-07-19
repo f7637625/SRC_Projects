@@ -8,31 +8,35 @@
     - name: Copy file
       ansible.builtin.copy:
         src: /root/SRC_Projects/docker-compose.yml
-        dest: /root
+        dest: /root/docker-compose.yml
 
     - name: Copy file
       ansible.builtin.copy:
         src: /root/SRC_Projects/dockerfile
-        dest: /root
+        dest: /root/dockerfile
 
-    - name: Copy file
+    - name: Copy file web1
       ansible.builtin.copy:
         src: /root/SRC_Projects/web1
         dest: /root
 
-    - name: Copy file
+    - name: Copy file web2
       ansible.builtin.copy:
         src: /root/SRC_Projects/web2
         dest: /root
 
-    - name: Copy file
+    - name: Copy file web3
       ansible.builtin.copy:
         src: /root/SRC_Projects/web3
         dest: /root
 
-    - name: Run `docker-compose up` again
-      command: docker-compose -f /root/docker-compose.yml up -d
+    - name: Run `docker-compose up` start
+      command: docker compose up -d
       args:
         chdir: /root
 
+    - name: Run `docker ps -a`
+      command: docker ps -a
+      args:
+        chdir: /root
 
